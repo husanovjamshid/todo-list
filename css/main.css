@@ -1,6 +1,7 @@
+ 
 .shortDiv {
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
 }
 
 @media only screen and (max-width: 768px){

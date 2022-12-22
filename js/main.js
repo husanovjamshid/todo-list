@@ -9,6 +9,8 @@ let elCompBtn = document.querySelector(".compBtn");
 let elAllBtn = document.querySelector(".allBtn");
 let elUncompBtn = document.querySelector(".uncompBtn");
 
+
+
 let todos = [];
 
 function todoFunc(array, node) {
@@ -16,7 +18,7 @@ function todoFunc(array, node) {
 
   array.forEach((item) => {
     let newEl = document.createElement("li");
-    newEl.setAttribute("class", "list-group-item d-flex align-items-center");
+    newEl.setAttribute("class", "list-group-item d-flex align-items-center ");
 
     let itemInput = document.createElement("input");
     itemInput.type = "checkbox";
@@ -25,7 +27,7 @@ function todoFunc(array, node) {
 
     let itemSpan = document.createElement("span");
     itemSpan.textContent = item.title;
-    itemSpan.setAttribute("class", "flex-grow-1 ms-3");
+    itemSpan.setAttribute("class", "flex-grow-1 ms-3 overflow-hidden w-25");
 
     let itemEditBtn = document.createElement("button");
     itemEditBtn.textContent = "Edit";
@@ -69,12 +71,13 @@ elForm.addEventListener("submit", function (evt) {
   }
 
   let obj = {
-    id: todos.length + 1,
+    id: Date.now(),
     title: elInput.value,
     isCompleted: false,
   };
 
   todos.push(obj);
+  
 
   todoFunc(todos, elList);
   elInput.value = "";
