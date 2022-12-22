@@ -10,6 +10,7 @@ let elAllBtn = document.querySelector(".allBtn");
 let elUncompBtn = document.querySelector(".uncompBtn");
 
 let todos = [];
+
 function todoFunc(array, node) {
   node.innerHTML = "";
 
@@ -53,6 +54,7 @@ function todoFunc(array, node) {
   });
 
   elAll.textContent = todos.length;
+  
 }
 
 elAllBtn.addEventListener("click", () => {
@@ -83,26 +85,36 @@ elList.addEventListener("click", (evt) => {
     let todoId = evt.target.dataset.todoId;
     let findIndex = todos.findIndex((item) => item.id == todoId);
     todos.splice(findIndex, 1);
+
+    let todoFilter = todos.filter((item) => item.isCompleted == true);
+
+    elComplate.textContent = todoFilter.length;
+    elUncomplate.textContent = elAll.textContent - elComplate.textContent - 1;
+    
     todoFunc(todos, elList);
   }
+
   if (evt.target.matches(".edit-btn")) {
     let todoId = evt.target.dataset.todoId;
     let findIndex = todos.find((item) => item.id == todoId);
     let changes = prompt("O'zgartiring: ", findIndex.title);
     findIndex.title = changes;
-    console.log(findIndex);
+    let todoFilter = todos.filter((item) => item.isCompleted == true);
+
+    elComplate.textContent = todoFilter.length;
+    elUncomplate.textContent = elAll.textContent - elComplate.textContent;
     todoFunc(todos, elList);
   }
+
 
   if (evt.target.matches(".form-check-input")) {
     let todoId = evt.target.dataset.todoId;
     let findIndex = todos.find((item) => item.id == todoId);
     findIndex.isCompleted = !findIndex.isCompleted;
-
+    
     let todoFilter = todos.filter((item) => item.isCompleted == true);
 
     elComplate.textContent = todoFilter.length;
-
     elUncomplate.textContent = elAll.textContent - elComplate.textContent;
     todoFunc(todos, elList);
   }
