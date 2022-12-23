@@ -67,6 +67,8 @@ function todoFunc(array, node) {
       (item) => item.isCompleted === false
     ).length;
   }
+
+  window.localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 if (todos.length > 0) {
@@ -107,7 +109,7 @@ elForm.addEventListener("submit", function (evt) {
 
   todoFunc(todos, elList);
   elInput.value = "";
-  window.localStorage.setItem("todos", JSON.stringify(todos));
+  
 });
 
 elList.addEventListener("click", (evt) => {
