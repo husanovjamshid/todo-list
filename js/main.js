@@ -2,16 +2,18 @@ let elForm = document.querySelector(".js-form");
 let elInput = document.querySelector(".js-input");
 let elList = document.querySelector(".js-list");
 let elAll = document.querySelector(".all");
-let elComplate = document.querySelector(".complate");
-let elUncomplate = document.querySelector(".uncomplate");
+let elComplete = document.querySelector(".complate");
+let elUncomplete = document.querySelector(".uncomplate");
 let elModal = document.querySelector(".js-modla");
-let elCompBtn = document.querySelector(".compBtn");
+let elCompleteBtn = document.querySelector(".compBtn");
 let elAllBtn = document.querySelector(".allBtn");
-let elUncompBtn = document.querySelector(".uncompBtn");
+let elUncompleteBtn = document.querySelector(".uncompBtn");
+let elEmpty = document.querySelector(".emptyTodo");
+let elDark = document.querySelector(".js-dark");
+let elTodoApp = document.querySelector(".todoApp");
 
-
-
-let todos = [];
+let LocalData = JSON.parse(window.localStorage.getItem("todos"));
+let todos = LocalData || [];
 
 function todoFunc(array, node) {
   node.innerHTML = "";
@@ -30,17 +32,17 @@ function todoFunc(array, node) {
     itemSpan.setAttribute("class", "flex-grow-1 ms-3 overflow-hidden w-25");
 
     let itemEditBtn = document.createElement("button");
-    itemEditBtn.textContent = "Edit";
+    itemEditBtn.textContent = `Edit`;
     itemEditBtn.dataset.todoId = item.id;
-    itemEditBtn.setAttribute("class", "btn btn-warning me-2 edit-btn");
+    itemEditBtn.setAttribute("class", "btn btn-warning me-2 edit-btn shadows");
     // itemEditBtn.setAttribute('data-bs-toggle', 'modal')
     // itemEditBtn.setAttribute('href', '#exampleModalToggle')
     // itemEditBtn.setAttribute('role', 'button')
 
     let itemDeleteBtn = document.createElement("button");
-    itemDeleteBtn.textContent = "Delete";
+    itemDeleteBtn.textContent = `Delete`;
     itemDeleteBtn.dataset.todoId = item.id;
-    itemDeleteBtn.setAttribute("class", "btn btn-danger  delete-btn");
+    itemDeleteBtn.setAttribute("class", "btn btn-danger  delete-btn shadows");
 
     newEl.appendChild(itemInput);
     newEl.appendChild(itemSpan);
@@ -56,11 +58,36 @@ function todoFunc(array, node) {
   });
 
   elAll.textContent = todos.length;
-  
+
+  if (todos.filter((item) => item.isCompleted)) {
+    elComplete.textContent = todos.filter((item) => item.isCompleted).length;
+  }
+  if (todos.filter((item) => item.isCompleted === false)) {
+    elUncomplete.textContent = todos.filter(
+      (item) => item.isCompleted === false
+    ).length;
+  }
+}
+
+if (todos.length > 0) {
+  todoFunc(todos, elList);
+}
+if (todos.length == 0) {
+  elEmpty.textContent = "Todo list bo'sh 😕";
 }
 
 elAllBtn.addEventListener("click", () => {
   todoFunc(todos, elList);
+});
+
+elCompleteBtn.addEventListener("click", () => {
+  let todoFilter = todos.filter((item) => item.isCompleted == true);
+  todoFunc(todoFilter, elList);
+});
+
+elUncompleteBtn.addEventListener("click", () => {
+  let todoFilter = todos.filter((item) => item.isCompleted == false);
+  todoFunc(todoFilter, elList);
 });
 
 elForm.addEventListener("submit", function (evt) {
@@ -71,16 +98,16 @@ elForm.addEventListener("submit", function (evt) {
   }
 
   let obj = {
-    id: Date.now(),
+    id: new Date(),
     title: elInput.value,
     isCompleted: false,
   };
 
   todos.push(obj);
-  
 
   todoFunc(todos, elList);
   elInput.value = "";
+  window.localStorage.setItem("todos", JSON.stringify(todos));
 });
 
 elList.addEventListener("click", (evt) => {
@@ -88,12 +115,6 @@ elList.addEventListener("click", (evt) => {
     let todoId = evt.target.dataset.todoId;
     let findIndex = todos.findIndex((item) => item.id == todoId);
     todos.splice(findIndex, 1);
-
-    let todoFilter = todos.filter((item) => item.isCompleted == true);
-
-    elComplate.textContent = todoFilter.length;
-    elUncomplate.textContent = elAll.textContent - elComplate.textContent - 1;
-    
     todoFunc(todos, elList);
   }
 
@@ -102,39 +123,41 @@ elList.addEventListener("click", (evt) => {
     let findIndex = todos.find((item) => item.id == todoId);
     let changes = prompt("O'zgartiring: ", findIndex.title);
     findIndex.title = changes;
-    let todoFilter = todos.filter((item) => item.isCompleted == true);
-
-    elComplate.textContent = todoFilter.length;
-    elUncomplate.textContent = elAll.textContent - elComplate.textContent;
     todoFunc(todos, elList);
   }
-
 
   if (evt.target.matches(".form-check-input")) {
     let todoId = evt.target.dataset.todoId;
     let findIndex = todos.find((item) => item.id == todoId);
     findIndex.isCompleted = !findIndex.isCompleted;
-    
-    let todoFilter = todos.filter((item) => item.isCompleted == true);
 
-    elComplate.textContent = todoFilter.length;
-    elUncomplate.textContent = elAll.textContent - elComplate.textContent;
     todoFunc(todos, elList);
   }
-
-  let complateArray = [];
-  elCompBtn.addEventListener("click", () => {
-    let todoFilter = todos.filter((item) => item.isCompleted == true);
-    complateArray.push(todoFilter);
-    console.log(complateArray[0]);
-    todoFunc(complateArray[0], elList);
-  });
-
-  let unComplateArray = [];
-  elUncompBtn.addEventListener("click", () => {
-    let todoFilter = todos.filter((item) => item.isCompleted == false);
-    unComplateArray.push(todoFilter);
-    console.log(unComplateArray[0]);
-    todoFunc(unComplateArray[0], elList);
-  });
 });
+
+// let darkData = JSON.parse(window.localStorage.getItem("theme"));
+
+let theme = false;
+
+elDark.addEventListener("click", function () {
+  theme = !theme;
+  let darkBg = theme ? "dark" : "light";
+  window.localStorage.setItem("theme", darkBg);
+  funcDark();
+});
+
+function funcDark() {
+  if (window.localStorage.getItem("theme") == "dark") {
+    document.body.style.backgroundColor = "black";
+    elTodoApp.style.color = 'white'
+    elEmpty.style.color = 'white'
+    elDark.style.color = 'white'
+  }
+  if (window.localStorage.getItem("theme") == "light") {
+    document.body.style.backgroundColor = "inherit";
+    elTodoApp.style.color = 'inherit'
+    elEmpty.style.color = 'inherit'
+    elDark.style.color = 'inherit'
+  }
+}
+funcDark();
