@@ -1,35 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .light {
-    background: rgb(238,174,202);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(145,178,210,1) 100%);
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(145, 178, 210, 1) 100%
+  );
 }
 
 .dark {
-    background: rgb(212,212,212);
-    background: radial-gradient(circle, rgba(212,212,212,1) 0%, rgba(85,63,76,1) 0%, rgba(26,28,29,0.9640231092436975) 100%);
+  background: rgb(212, 212, 212);
+  background: radial-gradient(
+    circle,
+    rgba(212, 212, 212, 1) 0%,
+    rgba(85, 63, 76, 1) 0%,
+    rgba(26, 28, 29, 0.9640231092436975) 100%
+  );
 }
 
 .shortDiv {
-    width: 100%;
-    max-width: 500px;
+  width: 100%;
+  max-width: 500px;
 }
 
 @media only screen and (max-width: 768px) {
-    .shortDiv {
-        max-width: 100%;
-    }
+  .shortDiv {
+    max-width: 100%;
+  }
 }
 
 @media only screen and (max-width: 576px) {
-    .shortDiv {
-        max-width: 100%;
-    }
+  .shortDiv {
+    max-width: 100%;
+  }
 }
 
 .shadows {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .fa-circle-half-stroke {
-    cursor: pointer;
-    font-size: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }
