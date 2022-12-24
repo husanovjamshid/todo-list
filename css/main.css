@@ -1,16 +1,25 @@
- 
+.light {
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(145,178,210,1) 100%);
+}
+
+.dark {
+    background: rgb(212,212,212);
+    background: radial-gradient(circle, rgba(212,212,212,1) 0%, rgba(85,63,76,1) 0%, rgba(26,28,29,0.9640231092436975) 100%);
+}
+
 .shortDiv {
     width: 100%;
     max-width: 500px;
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
     .shortDiv {
         max-width: 100%;
     }
 }
 
-@media only screen and (max-width: 576px){
+@media only screen and (max-width: 576px) {
     .shortDiv {
         max-width: 100%;
     }

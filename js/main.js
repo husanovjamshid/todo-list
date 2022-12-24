@@ -12,12 +12,11 @@ let elEmpty = document.querySelector(".emptyTodo");
 let elDark = document.querySelector(".js-dark");
 let elTodoApp = document.querySelector(".todoApp");
 let elDelete = document.querySelector(".deleteBtn");
+let elDarkTitle = document.querySelector(".darkTitle");
+let elDarkTitle1 = document.querySelector(".darkTitle1");
 
 let LocalData = JSON.parse(window.localStorage.getItem("todos"));
 let todos = LocalData || [];
-
-
-
 
 function todoFunc(array, node) {
   node.innerHTML = "";
@@ -96,10 +95,10 @@ elUncompleteBtn.addEventListener("click", () => {
   todoFunc(todoFilter, elList);
 });
 
-elDelete.addEventListener('click', function() {
+elDelete.addEventListener("click", function () {
   todos = [];
-  todoFunc(todos, elList)
-})
+  todoFunc(todos, elList);
+});
 
 elForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
@@ -118,7 +117,6 @@ elForm.addEventListener("submit", function (evt) {
 
   todoFunc(todos, elList);
   elInput.value = "";
-  
 });
 
 elList.addEventListener("click", (evt) => {
@@ -159,16 +157,22 @@ elDark.addEventListener("click", function () {
 
 function funcDark() {
   if (window.localStorage.getItem("theme") == "dark") {
-    document.body.style.backgroundColor = "black";
-    elTodoApp.style.color = 'white'
-    elEmpty.style.color = 'white'
-    elDark.style.color = 'white'
+    document.body.classList.add('dark')
+    document.body.classList.remove('light')
+    elTodoApp.style.color = "white";
+    elEmpty.style.color = "white";
+    elDark.style.color = "white";
+    elDarkTitle.style.color = "white";
+    elDarkTitle1.style.color = "white";
   }
   if (window.localStorage.getItem("theme") == "light") {
-    document.body.style.backgroundColor = "inherit";
-    elTodoApp.style.color = 'inherit'
-    elEmpty.style.color = 'inherit'
-    elDark.style.color = 'inherit'
+    document.body.classList.add('light')
+    document.body.classList.remove('dark')
+    elTodoApp.style.color = "inherit";
+    elEmpty.style.color = "inherit";
+    elDark.style.color = "inherit";
+    elDarkTitle.style.color = "inherit";
+    elDarkTitle1.style.color = "inherit";
   }
 }
 funcDark();
