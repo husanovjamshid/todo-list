@@ -11,9 +11,13 @@ let elUncompleteBtn = document.querySelector(".uncompBtn");
 let elEmpty = document.querySelector(".emptyTodo");
 let elDark = document.querySelector(".js-dark");
 let elTodoApp = document.querySelector(".todoApp");
+let elDelete = document.querySelector(".deleteBtn");
 
 let LocalData = JSON.parse(window.localStorage.getItem("todos"));
 let todos = LocalData || [];
+
+
+
 
 function todoFunc(array, node) {
   node.innerHTML = "";
@@ -91,6 +95,11 @@ elUncompleteBtn.addEventListener("click", () => {
   let todoFilter = todos.filter((item) => item.isCompleted == false);
   todoFunc(todoFilter, elList);
 });
+
+elDelete.addEventListener('click', function() {
+  todos = [];
+  todoFunc(todos, elList)
+})
 
 elForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
